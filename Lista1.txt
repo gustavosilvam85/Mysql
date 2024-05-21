@@ -1,0 +1,43 @@
+CREATE TABLE departamento(
+    codDepartamento INT AUTO_INCREMENT,
+    nome VARCHAR(40) UNIQUE NOT NULL,
+    descricaoFuncional VARCHAR(80),
+    localizacao VARCHAR
+    )
+
+
+CREATE TABLE estado(
+	siglaEstado CHAR(2) AUTO_INCREMENT,
+    nome VARCHAR(30) NOT NULL
+    )
+
+
+CREATE TABLE cidade(
+	codCidade INT AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    siglaEstado char(2) NOT NULL
+    )
+
+
+CREATE TABLE vendedor(
+	codVendedor INT AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    dataNascimento DATE,
+    endereco VARCHAR(60),
+    cep CHAR(8),
+    telefone VARCHAR(20),
+    codCidade INT,
+    dataContratacao DATE ,
+    codDepartamento INT
+    )
+
+
+CREATE TABLE cliente(
+    codCliente INT AUTO_INCREMENT,
+    endereco VARCHAR(60),
+    codCidade INT NOT NULL,
+    telefone VARCHAR(20),
+    tipo CHAR(1)  CHECK (tipo in (‘F’, ‘J’)),
+    dataCadastro DATE DEFAULT,
+    cep char(8)
+    )
