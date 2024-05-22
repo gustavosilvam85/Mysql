@@ -7,37 +7,119 @@ CREATE TABLE departamento(
 
 
 CREATE TABLE estado(
-	siglaEstado CHAR(2) AUTO_INCREMENT,
-    nome VARCHAR(30) NOT NULL
+	siglaEstado CHAR(2),
+    nome VARCHAR(30) NOT NULL UNIQUE
     )
 
-
 CREATE TABLE cidade(
-	codCidade INT AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
+	codCidade SERIAL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     siglaEstado char(2) NOT NULL
     )
 
 
 CREATE TABLE vendedor(
-	codVendedor INT AUTO_INCREMENT,
+	codVendedor SERIAL,
     nome VARCHAR(60) NOT NULL,
     dataNascimento DATE,
     endereco VARCHAR(60),
     cep CHAR(8),
     telefone VARCHAR(20),
     codCidade INT,
-    dataContratacao DATE ,
+    dataContratacao DATE DEFAULT(CURDATE()),
     codDepartamento INT
     )
 
 
 CREATE TABLE cliente(
-    codCliente INT AUTO_INCREMENT,
+    codCliente SERIAL,
     endereco VARCHAR(60),
     codCidade INT NOT NULL,
     telefone VARCHAR(20),
-    tipo CHAR(1)  CHECK (tipo in (‘F’, ‘J’)),
-    dataCadastro DATE DEFAULT,
+    tipo CHAR(1)  CHECK (tipo in ('F', 'J')),
+    dataCadastro DATE DEFAULT (CURDATE()),
     cep CHAR(8)
     )
+
+CREATE TABLE clienteFisico (
+    codCliente INT,
+    nome VARCHAR(50) NOT NULL,
+    dataNascimento DATE ,
+    cpf CHAR(11) NOT NULL UNIQUE,
+    rg VARCHAR(8)
+    )
+    
+CREATE TABLE clienteJuridico (
+    codCliente INT,
+    nomeFantasia VARCHAR(80) UNIQUE,
+    razaoSocial VARCHAR(80) NOT NULL UNIQUE,
+    ie VARCHAR(20) NOT NULL UNIQUE,
+    cgc VARCHAR(20) NOT NULL UNIQUE
+    )
+    
+CREATE TABLE classe (
+  	codClasse SERIAL,
+    sigla VARCHAR(12),
+    nome VARCHAR(40) NOT NULL ,
+    descricao VARCHAR(80)
+    )
+
+CREATE TABLE produto(
+  	codProduto SERIAL,
+    descrição VARCHAR(40) NOT NULL,
+    unidadeMedida CHAR(2),
+    embalagem VARCHAR(15)DEFAULT 'Fardo',
+    codClasse INT,
+    precoVenda DECIMAL(14,2),
+    estoqueMinimo DECIMAL(14,2)
+  	)
+    
+CREATE TABLE produtoLote(
+  	codProduto INT,
+    numeroLote INT,
+    quantidadeAdquirida DECIMAL(14,2),
+    quantidadeVendida DECIMAL(14,2),
+    precoCusto DECIMAL(14,2),
+    dataValidade DATE
+  	)
+    
+CREATE TABLE venda(
+    codVenda INT,
+    codCliente INT,
+    codVendedor INT,
+    dataVenda DATE DEFAULT(CURDATE()),
+    enderecoEntrega VARCHAR(60),
+    status VARCHAR(30)
+  	)
+    
+CREATE TABLE itemVenda(
+	codVenda INT,
+    codProduto INT,
+    numeroLote INT,
+    quantidade DECIMAL(14,2) NOT NULL CHECK (quantidade > 0)
+    )
+
+CREATE TABLE fornecedor(
+    codFornecedor INT,
+    nomeFantasia VARCHAR(80) UNIQUE,
+    razaoSocial VARCHAR(80) UNIQUE NOT NULL,
+    ie VARCHAR(20) NOT NULL UNIQUE,
+    cgc VARCHAR(20) UNIQUE NOT NULL,
+    endereco VARCHAR(60),
+    telefone VARCHAR(20),
+    codCidade INT
+    )
+
+CREATE TABLE pedido (
+    codPedido INT AUTO_INCREMENT,
+    dataRealizacao DATE DEFAULT (CURDATE()),
+    dataEntrega DATE,
+    codFornecedor INT,
+    valor DECIMAL(20,2)
+    )
+
+CREATE TABLE itemPedido (
+    codPedido INT,
+    codProduto INT,
+    quantidade DECIMAL(14,2) NOT NULL CHECK (quantidade > 0)
+	)
