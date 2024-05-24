@@ -1,5 +1,5 @@
 CREATE TABLE departamento(
-    codDepartamento SERIAL PRIMARY KEY,
+    codDepartamento INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(40) UNIQUE NOT NULL,
     descricaoFuncional VARCHAR(80),
     localizacao VARCHAR(255)
@@ -11,7 +11,7 @@ CREATE TABLE estado(
     );
 
 CREATE TABLE cidade(
-	codCidade INT AUTO_INCREMENT PRIMARY KEY,
+	codCidade INT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE,
     siglaEstado char(2) NOT NULL ,
     FOREIGN KEY (siglaEstado) REFERENCES estado(siglaEstado)
