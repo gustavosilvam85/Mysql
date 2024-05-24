@@ -1,0 +1,41 @@
+SELECT vendedor.codVendedor,vendedor.nome,vendedor.endereco,cidade.nome,estado.siglaEstado
+FROM vendedor
+JOIN cidade on vendedor.codCidade = cidade.codCidade
+JOIN estado on cidade.siglaEstado = estado.siglaEstado
+
+SELECT venda.codVenda,venda.dataVenda,vendedor.nome,venda.status
+FROM venda
+JOIN vendedor on venda.codVendedor = vendedor.codVendedor
+WHERE status = 'Despachada'
+
+SELECT clienteFisico.nome,cliente.endereco 
+FROM clienteFisico
+JOIN cliente on clienteFisico.codCliente = cliente.codCliente
+WHERE endereco = "Rua Marechal Floriano, 56"
+
+SELECT *
+FROM cliente
+WHERE tipo = 'J'
+
+SELECT clienteJuridico.nomeFantasia,cliente.endereco,cliente.telefone,cidade.nome,estado.siglaEstado
+FROM clienteJuridico
+JOIN cliente ON cliente.codCliente = clienteJuridico.codCliente
+JOIN cidade ON cliente.codCidade = cidade.codCidade
+JOIN estado on cidade.siglaEstado = estado.siglaEstado
+WHERE tipo = 'J' AND cliente.dataCadastro > "1987-01-01" AND cliente.dataCadastro < "2003-06-30"
+
+SELECT vendedor.nome,clienteJuridico.nomeFantasia
+FROM vendedor
+JOIN venda ON vendedor.codVendedor = venda.codVendedor
+JOIN cliente ON venda.codCliente = cliente.codCliente
+JOIN clienteJuridico ON cliente.codCliente = clienteJuridico.codCliente
+WHERE nomeFantasia = 'Gelinski'
+
+SELECT 	produto.codProduto, produtoLote.numeroLote,produto.descricao,produtoLote.dataValidade
+FROM produto
+JOIN  produtoLote ON produto.codProduto = produtoLote.codProduto
+WHERE dataValidade < CURRENT_DATE
+
+SELECT 	departamento.nome,departamento.nome,vendedor.codDepartamento,vendedor.nome
+FROM departamento
+JOIN  vendedor ON departamento.codDepartamento = vendedor.codVendedor
