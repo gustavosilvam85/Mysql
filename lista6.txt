@@ -1,0 +1,47 @@
+SELECT pedido.codPedido,pedido.dataRealizacao,pedido.dataEntrega,fornecedor.nomeFantasia
+FROM pedido
+INNER JOIN fornecedor
+ON pedido.codFornecedor = fornecedor.codFornecedor
+
+SELECT vendedor.nome,vendedor.dataNascimento,cidade.nome
+FROM vendedor
+INNER JOIN  cidade
+ON vendedor.codCidade = cidade.codCidade
+WHERE cidade.nome = "Apucarana"
+
+SELECT venda.codVenda,venda.dataVenda,vendedor.nome,produtoLote.numeroLote,produto.descricao
+FROM venda
+NATURAL JOIN itemVenda
+NATURAL JOIN produtoLote
+NATURAL JOIN produto
+NATURAL JOIN vendedor
+WHERE produto.descricao = "Cal"
+
+SELECT classe.sigla,classe.nome,produto.codProduto,produto.descricao,produto.estoqueMinimo
+FROM classe
+JOIN produto
+ON produto.codClasse = classe.codClasse
+WHERE classe.nome = "Acabamentos"
+
+SELECT fornecedor.nomeFantasia,pedido.codPedido,pedido.dataRealizacao,pedido.dataEntrega
+FROM pedido
+JOIN fornecedor
+ON pedido.codFornecedor = fornecedor.codFornecedor
+WHERE fornecedor.nomeFantasia = "Incepa"
+
+SELECT produto.codProduto,produto.descricao,venda.codVenda
+FROM produto
+LEFT JOIN venda
+ON produto.codProduto = venda.codVendedor
+LEFT JOIN vendedor
+ON vendedor.codVendedor= venda.codVendedor
+
+SELECT fornecedor.nomeFantasia,pedido.codPedido,pedido.dataEntrega
+FROM fornecedor
+LEFT JOIN pedido
+ON fornecedor.codFornecedor = pedido.codFornecedor
+
+SELECT departamento.nome,departamento.localizacao,vendedor.nome,vendedor.dataNascimento
+FROM departamento
+RIGHT JOIN vendedor
+ON departamento.codDepartamento = vendedor.codDepartamento
